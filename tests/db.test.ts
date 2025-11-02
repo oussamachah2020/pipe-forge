@@ -31,18 +31,18 @@ describe('Database', () => {
 
     // Retrieve all items
     const items = await db.getAllItems();
-    
+
     // Verify we got both items back
     expect(items).toHaveLength(2);
-    
+
     // Verify both items are present (order doesn't matter for this test)
-    const itemNames = items.map(item => item.name);
+    const itemNames = items.map((item) => item.name);
     expect(itemNames).toContain('Item 1');
     expect(itemNames).toContain('Item 2');
-    
+
     // Verify they have their descriptions
-    const item1 = items.find(item => item.name === 'Item 1');
-    const item2 = items.find(item => item.name === 'Item 2');
+    const item1 = items.find((item) => item.name === 'Item 1');
+    const item2 = items.find((item) => item.name === 'Item 2');
     expect(item1?.description).toBe('Description 1');
     expect(item2?.description).toBe('Description 2');
   });
@@ -52,7 +52,7 @@ describe('Database', () => {
     expect(itemId).toBeGreaterThan(0);
 
     const items = await db.getAllItems();
-    const item = items.find(i => i.name === 'Item without description');
+    const item = items.find((i) => i.name === 'Item without description');
     expect(item?.description).toBeNull();
   });
 });

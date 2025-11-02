@@ -16,7 +16,7 @@ async function startServer() {
     // Initialize database using the factory method
     // This ensures tables are created before we start accepting requests
     const database = await Database.create(DATABASE_PATH);
-    
+
     // Create the Express app with the initialized database
     const app = createApp(database);
 
@@ -35,7 +35,6 @@ async function startServer() {
         process.exit(0);
       });
     });
-    
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);

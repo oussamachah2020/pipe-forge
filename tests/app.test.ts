@@ -15,10 +15,10 @@ describe('Express API Integration Tests', () => {
     if (fs.existsSync(testDbPath)) {
       fs.unlinkSync(testDbPath);
     }
-    
+
     // Initialize database using factory method
     db = await Database.create(testDbPath);
-    
+
     // Create Express app with initialized database
     app = createApp(db);
   });
@@ -27,7 +27,7 @@ describe('Express API Integration Tests', () => {
   afterAll(async () => {
     // Close database connection
     await db.close();
-    
+
     // Remove test database file
     if (fs.existsSync(testDbPath)) {
       fs.unlinkSync(testDbPath);

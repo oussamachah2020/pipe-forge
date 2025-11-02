@@ -73,7 +73,7 @@ export class Database {
   async createItem(name: string, description?: string): Promise<number> {
     const query = 'INSERT INTO items (name, description) VALUES (?, ?)';
     return new Promise((resolve, reject) => {
-      this.db.run(query, [name, description || null], function(err) {
+      this.db.run(query, [name, description || null], function (err) {
         if (err) reject(err);
         else resolve(this.lastID);
       });
