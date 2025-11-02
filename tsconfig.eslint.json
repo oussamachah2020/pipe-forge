@@ -4,8 +4,11 @@
       "noEmit": true
     },
     "include": [
-      "src/**/*",
-      "tests/**/*",
-      "test/**/*"
+      "src/**/*.ts",
+      "tests/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+      "dist"
     ]
   }
