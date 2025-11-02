@@ -1,5 +1,4 @@
 import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
 
 // Initialize SQLite database with async wrapper
 export class Database {
@@ -17,7 +16,7 @@ export class Database {
 
     // Enable foreign keys for data integrity
     this.db.run('PRAGMA foreign_keys = ON');
-    
+
     // Initialize tables
     this.initializeTables();
   }
@@ -43,7 +42,7 @@ export class Database {
   }
 
   // Get all items from database
-  async getAllItems(): Promise<any[]> {
+  async getAllItems(): Promise<unknown[]> {
     const query = 'SELECT * FROM items ORDER BY created_at DESC';
     return new Promise((resolve, reject) => {
       this.db.all(query, [], (err, rows) => {
@@ -57,7 +56,7 @@ export class Database {
   async createItem(name: string, description?: string): Promise<number> {
     const query = 'INSERT INTO items (name, description) VALUES (?, ?)';
     return new Promise((resolve, reject) => {
-      this.db.run(query, [name, description || null], function(err) {
+      this.db.run(query, [name, description || null], function (err) {
         if (err) reject(err);
         else resolve(this.lastID); // Return the ID of newly created item
       });

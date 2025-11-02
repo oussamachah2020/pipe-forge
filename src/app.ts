@@ -24,31 +24,34 @@ export function createApp(database: Database) {
   });
 
   // Create a new item
-  app.post('/items', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { name, description } = req.body;
+  app.post(
+    '/items',
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { name, description } = req.body;
 
-      // Validate input
-      if (!name || typeof name !== 'string') {
-        res.status(400).json({
-          success: false,
-          error: 'Name is required and must be a string',
+        // Validate input
+        if (!name || typeof name !== 'string') {
+          res.status(400).json({
+            success: false,
+            error: 'Name is required and must be a string',
+          });
+          return;
+        }
+
+        const itemId = await database.createItem(name, description);
+        res.status(201).json({
+          success: true,
+          data: { id: itemId, name, description },
         });
-        return;
+      } catch (error) {
+        next(error);
       }
-
-      const itemId = await database.createItem(name, description);
-      res.status(201).json({
-        success: true,
-        data: { id: itemId, name, description },
-      });
-    } catch (error) {
-      next(error);
-    }
-  });
+    },
+  );
 
   // Error handling middleware - catches all errors
-  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
     console.error('Error:', err);
     res.status(500).json({
       success: false,
